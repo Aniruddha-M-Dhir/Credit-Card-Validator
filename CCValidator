@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+public class CCValidator {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String cNumber;
+
+        while (true) {
+            System.out.print("Enter your credit card number: ");
+            cNumber = sc.nextLine();
+            if (!cNumber.chars().allMatch(Character::isDigit)) {
+                System.out.println("Invalid input. Please enter only numbers.");
+                continue;
+            }
+            if (!(cNumber.startsWith("4") || cNumber.startsWith("5") || cNumber.startsWith("37") || cNumber.startsWith("6"))) {
+                System.out.println("Invalid. The credit card must start with 4, 5, 37, or 6.");
+                continue;
+            }
+            if (cNumber.length() < 13 || cNumber.length() > 16) {
+                System.out.println("Invalid credit card number. It must be between 13 and 16 digits.");
+                continue;
+            }
+            int sum = 0;
+            for (int i = cNumber.length() - 1; i >= 0; i--) {
+                int twoDigi = cNumber.charAt(i) - '0'; // Convert char to int
+                if ((cNumber.length() - 1 - i) % 2 == 1) {
+                    twoDigi = twoDigi*2;
+                    if (twoDigi > 9) {
+                        twoDigi =twoDigi- 9;
+                    }
+                }
+                sum = sum+twoDigi;
+            }
+            if (sum % 10 == 0) {
+                System.out.println("Valid credit card number.");
+            } else {
+                System.out.println("Invalid credit card number.");
+            }
+            break;
+        }
+    }
+}
